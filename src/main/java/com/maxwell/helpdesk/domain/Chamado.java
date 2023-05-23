@@ -31,9 +31,8 @@ public class Chamado {
 
     }
 
-    public Chamado(Integer id, LocalDate dataFechamento, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {
+    public Chamado(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {
         this.id = id;
-        this.dataFechamento = dataFechamento;
         this.prioridade = prioridade;
         this.status = status;
         this.titulo = titulo;
