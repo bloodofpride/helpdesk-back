@@ -1,6 +1,7 @@
 package com.maxwell.helpdesk.services;
 
 import com.maxwell.helpdesk.domain.Tecnico;
+import com.maxwell.helpdesk.domain.dtos.TecnicoDTO;
 import com.maxwell.helpdesk.repositories.TecnicoRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,8 @@ public class TecnicoService {
         this.tecnicoRepository = tecnicoRepository;
     }
 
-    public Tecnico findById(Integer id){
+    public TecnicoDTO findById(Integer id){
         Optional<Tecnico> tecnico = tecnicoRepository.findById(id);
-        return tecnico.orElse(null);
+        return new TecnicoDTO(tecnico.get());
     }
 }
