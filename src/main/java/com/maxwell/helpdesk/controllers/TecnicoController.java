@@ -1,6 +1,5 @@
 package com.maxwell.helpdesk.controllers;
 
-import com.maxwell.helpdesk.domain.Tecnico;
 import com.maxwell.helpdesk.domain.dtos.TecnicoDTO;
 import com.maxwell.helpdesk.services.TecnicoService;
 import org.springframework.http.ResponseEntity;

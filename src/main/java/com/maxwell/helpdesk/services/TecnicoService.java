@@ -3,6 +3,7 @@ package com.maxwell.helpdesk.services;
 import com.maxwell.helpdesk.domain.Tecnico;
 import com.maxwell.helpdesk.domain.dtos.TecnicoDTO;
 import com.maxwell.helpdesk.repositories.TecnicoRepository;
+import com.maxwell.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,7 +17,8 @@ public class TecnicoService {
     }
 
     public TecnicoDTO findById(Integer id){
-        Optional<Tecnico> tecnico = tecnicoRepository.findById(id);
-        return new TecnicoDTO(tecnico.get());
+        Tecnico tecnico = tecnicoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado com o id: "+id));
+        return new TecnicoDTO(tecnico);
     }
 }
