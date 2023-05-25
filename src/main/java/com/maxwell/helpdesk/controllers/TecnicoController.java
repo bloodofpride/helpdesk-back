@@ -3,11 +3,10 @@ package com.maxwell.helpdesk.controllers;
 import com.maxwell.helpdesk.domain.dtos.TecnicoDTO;
 import com.maxwell.helpdesk.services.TecnicoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,5 +26,15 @@ public class TecnicoController {
     @GetMapping()
     public ResponseEntity<List<TecnicoDTO>> findAll(){
         return ResponseEntity.ok(tecnicoService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<TecnicoDTO> save(@RequestBody TecnicoDTO objDTO){
+        TecnicoDTO newDTO = tecnicoService.save(objDTO);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequestUri().path("/{id}")
+                .buildAndExpand(newDTO.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 }

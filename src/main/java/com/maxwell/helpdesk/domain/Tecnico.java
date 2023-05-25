@@ -1,6 +1,7 @@
 package com.maxwell.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.maxwell.helpdesk.domain.dtos.TecnicoDTO;
 import com.maxwell.helpdesk.domain.enums.Perfil;
 
 import javax.persistence.Entity;
@@ -21,6 +22,11 @@ public class Tecnico extends Pessoa{
 
     public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
         super(id, nome, cpf, email, senha);
+        addPerfil(Perfil.CLIENTE);
+    }
+
+    public Tecnico(TecnicoDTO objDTO) {
+        super(objDTO.getId(), objDTO.getNome(), objDTO.getCpf(), objDTO.getEmail(), objDTO.getSenha());
         addPerfil(Perfil.CLIENTE);
     }
 
