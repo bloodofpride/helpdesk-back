@@ -6,7 +6,9 @@ import com.maxwell.helpdesk.repositories.TecnicoRepository;
 import com.maxwell.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TecnicoService {
@@ -20,5 +22,11 @@ public class TecnicoService {
         Tecnico tecnico = tecnicoRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado com o id: "+id));
         return new TecnicoDTO(tecnico);
+    }
+
+    public List<TecnicoDTO> findAll() {
+        return tecnicoRepository.findAll().stream()
+                .map(TecnicoDTO::new)
+                .collect(Collectors.toList());
     }
 }
