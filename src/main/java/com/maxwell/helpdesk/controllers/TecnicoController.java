@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class TecnicoController {
     }
 
     @PostMapping
-    public ResponseEntity<TecnicoDTO> save(@RequestBody TecnicoDTO objDTO){
+    public ResponseEntity<TecnicoDTO> save(@Valid @RequestBody TecnicoDTO objDTO){
         TecnicoDTO newDTO = tecnicoService.save(objDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequestUri().path("/{id}")

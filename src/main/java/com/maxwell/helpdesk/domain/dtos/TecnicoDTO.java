@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.maxwell.helpdesk.domain.Tecnico;
 import com.maxwell.helpdesk.domain.enums.Perfil;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,9 +12,13 @@ import java.util.stream.Collectors;
 
 public class TecnicoDTO {
     private Integer id;
+    @NotNull(message = "O campo NOME é obrigatório.")
     private String nome;
+    @NotNull(message = "O campo CPF é obrigatório.")
     private String cpf;
+    @NotNull(message = "O campo EMAIL é obrigatório.")
     private String email;
+    @NotNull(message = "O campo SENHA é obrigatório.")
     private String senha;
     private Set<Integer> perfis = new HashSet<>();
     @JsonFormat(pattern = "dd/MM/yyyy")
