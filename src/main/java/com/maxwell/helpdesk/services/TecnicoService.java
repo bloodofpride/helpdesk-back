@@ -25,10 +25,9 @@ public class TecnicoService {
         this.pessoaRepository = pessoaRepository;
     }
 
-    public TecnicoDTO findById(Integer id){
-        Tecnico tecnico = tecnicoRepository.findById(id)
+    public Tecnico findById(Integer id){
+        return tecnicoRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado com o id: "+id));
-        return new TecnicoDTO(tecnico);
     }
 
     public List<TecnicoDTO> findAll() {
@@ -55,5 +54,15 @@ public class TecnicoService {
         if(obj.isPresent() && !Objects.equals(obj.get().getId(), objDTO.getId())){
             throw new DataIntegrityViolationException("Já existe um usuário com o email: "+objDTO.getEmail());
         }
+    }
+
+    @Transactional
+    public TecnicoDTO update(Integer id, TecnicoDTO objDTO) {
+        objDTO.setId(id);
+        Tecnico oldObj = findById(id);
+        validaPorCpfEEmail(objDTO);
+        oldObj = new Tecnico(objDTO);
+        tecnicoRepository.save(oldObj);
+        return new TecnicoDTO(oldObj);
     }
 }

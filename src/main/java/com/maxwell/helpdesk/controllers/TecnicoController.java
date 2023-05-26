@@ -21,7 +21,7 @@ public class TecnicoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TecnicoDTO> findById(@PathVariable Integer id){
-        return ResponseEntity.ok(tecnicoService.findById(id));
+        return ResponseEntity.ok(new TecnicoDTO(tecnicoService.findById(id)));
     }
 
     @GetMapping()
@@ -37,5 +37,11 @@ public class TecnicoController {
                 .buildAndExpand(newDTO.getId())
                 .toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id, @Valid @RequestBody TecnicoDTO objDTO){
+        TecnicoDTO newDTO = tecnicoService.update(id, objDTO);
+        return ResponseEntity.ok().body(newDTO);
     }
 }

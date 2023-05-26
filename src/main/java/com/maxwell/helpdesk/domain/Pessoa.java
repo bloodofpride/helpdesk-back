@@ -2,8 +2,10 @@ package com.maxwell.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.maxwell.helpdesk.domain.enums.Perfil;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,8 +17,10 @@ public abstract class Pessoa {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
+    @CPF
     @Column(unique = true)
     protected String cpf;
+    @Email
     @Column(unique = true)
     protected String email;
     protected String senha;
