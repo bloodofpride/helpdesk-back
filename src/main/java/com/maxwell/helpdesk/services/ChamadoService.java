@@ -10,6 +10,7 @@ import com.maxwell.helpdesk.repositories.ChamadoRepository;
 import com.maxwell.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,13 @@ public class ChamadoService {
         return new ChamadaDTO(chamadoRepository.save(newChamado(objDTO)));
     }
 
+    public ChamadaDTO update(Integer id, ChamadaDTO objDTO) {
+        objDTO.setId(id);
+        Chamado oldObj = findById(id);
+        oldObj = newChamado(objDTO);
+        return new ChamadaDTO(chamadoRepository.save(oldObj));
+    }
+
     private Chamado newChamado(ChamadaDTO obj){
         Cliente cliente = clienteService.findById(obj.getCliente());
         Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
@@ -49,6 +57,10 @@ public class ChamadoService {
             chamado.setId(obj.getId());
         }
 
+        if(obj.getStatus() == 2){
+            obj.setDataFechamento(LocalDate.now());
+        }
+        
         chamado.setTecnico(tecnico);
         chamado.setCliente(cliente);
         chamado.setPrioridade(Prioridade.toEnum(obj.getPrioridade()));

@@ -38,4 +38,10 @@ public class ChamadoController {
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ChamadaDTO> update(@PathVariable Integer id ,@Valid @RequestBody ChamadaDTO objDTO){
+        ChamadaDTO newDTO = chamadoService.update(id, objDTO);
+        return ResponseEntity.ok().body(newDTO);
+    }
 }
