@@ -3,11 +3,11 @@ package com.maxwell.helpdesk.controllers;
 import com.maxwell.helpdesk.domain.dtos.ChamadaDTO;
 import com.maxwell.helpdesk.services.ChamadoService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -27,5 +27,15 @@ public class ChamadoController {
     @GetMapping()
     public ResponseEntity<List<ChamadaDTO>> findAll(){
         return ResponseEntity.ok().body(chamadoService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<ChamadaDTO> create(@Valid @RequestBody ChamadaDTO objDTO){
+        ChamadaDTO newDTO = chamadoService.save(objDTO);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequestUri().path("/{id}")
+                .buildAndExpand(newDTO.getId())
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 }

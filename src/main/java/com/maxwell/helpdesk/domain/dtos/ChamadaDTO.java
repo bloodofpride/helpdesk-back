@@ -3,6 +3,7 @@ package com.maxwell.helpdesk.domain.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.maxwell.helpdesk.domain.Chamado;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class ChamadaDTO {
@@ -11,12 +12,18 @@ public class ChamadaDTO {
     private LocalDate dataAbertura = LocalDate.now();
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
+    @NotNull(message = "O campo PRIORIDADE é obrigatório.")
     private Integer prioridade;
+    @NotNull(message = "O campo STATUS é obrigatório.")
     private Integer status;
+    @NotNull(message = "O campo TITULO é obrigatório.")
     private String titulo;
+    @NotNull(message = "O campo OBSERVAÇÕES é obrigatório.")
     private String observacoes;
+    @NotNull(message = "O campo TÉCNICO é obrigatório.")
     private Integer tecnico;
     private String nomeTecnico;
+    @NotNull(message = "O campo CLIENTE é obrigatório.")
     private Integer cliente;
     private String nomeCliente;
 
