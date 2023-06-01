@@ -7,6 +7,7 @@ import com.maxwell.helpdesk.repositories.ClienteRepository;
 import com.maxwell.helpdesk.repositories.PessoaRepository;
 import com.maxwell.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.maxwell.helpdesk.services.exceptions.ObjectNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 public class ClienteService {
     private final ClienteRepository clienteRepository;
     private final PessoaRepository pessoaRepository;
+    private final BCryptPasswordEncoder encoder;
 
-    public ClienteService(ClienteRepository clienteRepository, PessoaRepository pessoaRepository) {
+    public ClienteService(ClienteRepository clienteRepository, PessoaRepository pessoaRepository, BCryptPasswordEncoder encoder) {
         this.clienteRepository = clienteRepository;
         this.pessoaRepository = pessoaRepository;
+        this.encoder = encoder;
     }
 
     public Cliente findById(Integer id){
@@ -39,6 +42,7 @@ public class ClienteService {
     @Transactional
     public ClienteDTO save(ClienteDTO objDTO) {
         objDTO.setId(null);
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validaPorCpfEEmail(objDTO);
         Cliente cliente = new Cliente(objDTO);
         clienteRepository.save(cliente);

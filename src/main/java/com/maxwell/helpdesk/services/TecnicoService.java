@@ -7,6 +7,7 @@ import com.maxwell.helpdesk.repositories.PessoaRepository;
 import com.maxwell.helpdesk.repositories.TecnicoRepository;
 import com.maxwell.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.maxwell.helpdesk.services.exceptions.ObjectNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 public class TecnicoService {
     private final TecnicoRepository tecnicoRepository;
     private final PessoaRepository pessoaRepository;
+    private final BCryptPasswordEncoder encoder;
 
-    public TecnicoService(TecnicoRepository tecnicoRepository, PessoaRepository pessoaRepository) {
+    public TecnicoService(TecnicoRepository tecnicoRepository, PessoaRepository pessoaRepository, BCryptPasswordEncoder encoder) {
         this.tecnicoRepository = tecnicoRepository;
         this.pessoaRepository = pessoaRepository;
+        this.encoder = encoder;
     }
 
     public Tecnico findById(Integer id){
@@ -39,6 +42,7 @@ public class TecnicoService {
     @Transactional
     public TecnicoDTO save(TecnicoDTO objDTO) {
         objDTO.setId(null);
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         validaPorCpfEEmail(objDTO);
         Tecnico tecnico = new Tecnico(objDTO);
         tecnicoRepository.save(tecnico);
