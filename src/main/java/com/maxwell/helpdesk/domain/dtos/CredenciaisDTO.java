@@ -7,7 +7,7 @@ public class CredenciaisDTO {
     public CredenciaisDTO(){
 
     }
-    
+
     public CredenciaisDTO(String email, String senha) {
         this.email = email;
         this.senha = senha;
