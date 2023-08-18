@@ -3,6 +3,7 @@ package com.maxwell.helpdesk.domain.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.maxwell.helpdesk.domain.Tecnico;
 import com.maxwell.helpdesk.domain.enums.Perfil;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ public class TecnicoDTO {
     @NotNull(message = "O campo NOME é obrigatório.")
     private String nome;
     @NotNull(message = "O campo CPF é obrigatório.")
+    @CPF
     private String cpf;
     @NotNull(message = "O campo EMAIL é obrigatório.")
     private String email;
